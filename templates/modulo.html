@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ modulo['titulo'] }} - Sistema Web POO</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>{{ modulo['titulo'] }}</h1>
+    <p>{{ modulo['descripcion'] }}</p>
+    <a href="{{ url_for('panel') }}" class="btn btn-secondary mb-3">Volver al panel</a>
+
+    {% for leccion in lecciones %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h2 class="card-title">{{ leccion['titulo'] }}</h2>
+            <p class="card-text">{{ leccion['contenido'] }}</p>
+
+            {% for ejercicio in leccion['ejercicios'] %}
+            <div class="card mb-2 border-primary">
+                <div class="card-body">
+                    <h5>Ejercicio: {{ ejercicio['descripcion'] }}</h5>
+
+                    {% if ejercicio['ejemplo_codigo'] %}
+                    <h6>Ejemplo de código:</h6>
+                    <pre>{{ ejercicio['ejemplo_codigo'] }}</pre>
+                    {% endif %}
+
+                    {% if ejercicio['link_colab'] %}
+                    <h6>Probar en Google Colab:</h6>
+                    <a href="{{ ejercicio['link_colab'] }}" target="_blank" class="btn btn-info mb-2">
+                        Abrir Colab
+                    </a>
+                    {% endif %}
+
+                    <form action="{{ url_for('marcar_como_correcto') }}" method="POST">
+                        <input type="hidden" name="ejercicio_id" value="{{ ejercicio['id'] }}">
+                        <input type="hidden" name="modulo_id" value="{{ modulo['id'] }}">
+                        <button type="submit" class="btn btn-success">Marcar como completado</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+
+    {% if examen %}
+    <div class="card mt-4 mb-5">
+        <div class="card-body">
+            <h2>Examen del módulo</h2>
+
+            {% if porcentaje is none or permitir_reintento %}
+            <form action="{{ url_for('resolver_examen') }}" method="POST">
+                <input type="hidden" name="modulo_id" value="{{ modulo['id'] }}">
+                {% for pregunta in examen %}
+                <div class="mb-3">
+                    <h5>{{ loop.index }}. {{ pregunta['pregunta'] }}</h5>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pregunta_{{ pregunta['id'] }}" value="1" required>
+                        <label class="form-check-label">{{ pregunta['opcion1'] }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pregunta_{{ pregunta['id'] }}" value="2" required>
+                        <label class="form-check-label">{{ pregunta['opcion2'] }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pregunta_{{ pregunta['id'] }}" value="3" required>
+                        <label class="form-check-label">{{ pregunta['opcion3'] }}</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="pregunta_{{ pregunta['id'] }}" value="4" required>
+                        <label class="form-check-label">{{ pregunta['opcion4'] }}</label>
+                    </div>
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Enviar examen</button>
+            </form>
+            {% endif %}
+
+            {% if porcentaje is not none %}
+            <div class="alert alert-info mt-3">
+                <strong>Resultado:</strong> {{ porcentaje }}% de respuestas correctas.
+            </div>
+
+            {% if porcentaje >= 70 %}
+            <a href="{{ url_for('siguiente_modulo', modulo_id=modulo['id']) }}" class="btn btn-success mt-2">
+                Ir al siguiente módulo
+            </a>
+            {% elif permitir_reintento %}
+            <a href="{{ url_for('reintentar_examen', modulo_id=modulo['id']) }}" class="btn btn-warning mt-2">
+                Reintentar examen
+            </a>
+            {% endif %}
+
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>

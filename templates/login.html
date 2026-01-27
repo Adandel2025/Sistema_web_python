@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema Web POO</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Iniciar Sesión</h1>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class="flash-messages">
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <label>Nombre:</label>
+            <input type="text" name="nombre" required>
+
+            <label>Correo:</label>
+            <input type="email" name="correo" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <!-- 🔵 BOTÓN AGREGADO -->
+        <br>
+        <a href="{{ url_for('admin_login') }}" style="
+            display:inline-block;
+            padding:10px 20px;
+            margin-top:10px;
+            background:#444;
+            color:white;
+            text-decoration:none;
+            border-radius:5px;">
+            Administrar
+        </a>
+        <!-- 🔵 FIN DEL BOTÓN -->
+
+        <a href="{{ url_for('inicio') }}">Volver al inicio</a>
+    </main>
+</body>
+</html>

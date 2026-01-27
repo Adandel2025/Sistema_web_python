@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Web POO</title>
+</head>
+<body>
+    <h1>Módulos disponibles</h1>
+    <ul>
+        {% for modulo in modulos %}
+            <li>
+                <a href="{{ url_for('ver_modulo', modulo_id=modulo.id) }}">
+                    {{ modulo.orden }} - {{ modulo.titulo }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

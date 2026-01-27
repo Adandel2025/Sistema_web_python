@@ -1,0 +1,91 @@
+/* -------------------- Estilo general -------------------- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf6ec; /* color crema suave */
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #5a4634; /* marrón oscuro suave */
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fffaf3; /* crema más claro */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(90, 70, 52, 0.15);
+}
+
+/* Encabezados */
+h1 {
+    color: #c89b5c; /* dorado suave */
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #5a4634;
+    margin-bottom: 15px;
+}
+
+/* Botones */
+button {
+    background-color: #c89b5c; /* dorado suave */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #a57f48; /* dorado más oscuro */
+    transform: scale(1.05);
+}
+
+/* Formularios */
+input[type="text"], input[type="email"] {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #d8c9b0;
+    width: 80%;
+    max-width: 300px;
+    font-size: 16px;
+    background-color: #fffdf8;
+    color: #5a4634;
+}
+
+/* Listas de módulos */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f7efe3; /* crema más oscuro */
+    margin: 8px auto;
+    padding: 12px;
+    max-width: 400px;
+    border-radius: 8px;
+    transition: transform 0.2s, background-color 0.3s;
+    border: 1px solid #e2d5c0;
+}
+
+li:hover {
+    transform: scale(1.03);
+    background-color: #f0e2c8;
+}
+
+/* Mensajes de error */
+ul.flashes {
+    list-style: none;
+    padding: 0;
+    color: #b33a3a;
+    margin-bottom: 10px;
+    font-weight: bold;
+}

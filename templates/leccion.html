@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ leccion.titulo }}</title>
+</head>
+<body>
+    <h1>{{ leccion.titulo }}</h1>
+    <p>{{ leccion.contenido }}</p>
+
+    <h2>Ejercicios:</h2>
+    <ul>
+        {% for ejercicio in ejercicios %}
+            <li>
+                {{ ejercicio.descripcion }}
+                {% if ejercicio.ejemplo_codigo %}
+                    <pre>{{ ejercicio.ejemplo_codigo }}</pre>
+                {% endif %}
+                {% if ejercicio.link_colab %}
+                    <a href="{{ ejercicio.link_colab }}" target="_blank">Probar en Colab</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('ver_modulo', modulo_id=leccion.modulo_id) }}">Volver al módulo</a>
+</body>
+</html>
