@@ -1,4 +1,0 @@
-Flask
-pymysql
-Werkzeug
-gunicorn
